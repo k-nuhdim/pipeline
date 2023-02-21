@@ -1,0 +1,14 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - ls -l
+  build:
+    commands:
+      - ls -l 
+      - aws cloudformation deploy --template-file ./main.yml --stack-name my-new-stack
+artifacts:
+  files:
+    - '**/*'
+    

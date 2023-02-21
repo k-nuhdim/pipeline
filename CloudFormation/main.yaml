@@ -1,0 +1,26 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  EC2Instance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: !Ref EC2InstanceType
+      ImageId: !Ref EC2ImageId
+
+
+
+
+Parameters:
+  EC2InstanceType:
+    Type: String
+    Description: EC2 instance type
+    Default: t2.micro
+    AllowedValues:
+      - t2.micro
+      - t2.small
+      - t2.medium
+  EC2ImageId:
+    Type: String
+    Description: EC2 image ID
+    Default: ami-06ee4e2261a4dc5c3
+    
