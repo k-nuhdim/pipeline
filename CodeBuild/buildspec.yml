@@ -8,7 +8,7 @@ phases:
       - pip install awscli
   build:
     commands:
-      - CHANGESET_OUTPUT=$(aws cloudformation create-change-set --stack-name MyStack --template-body file://CloudFormation/main.yml --parameters file://CloudFormation/prod-parameters.json --change-set-name MyChangeset --change-set-type UPDATE --capabilities CAPABILITY_NAMED_IAM)    
+      - CHANGESET_OUTPUT=$(aws cloudformation create-change-set --stack-name MyStack --template-body file://CloudFormation/main.yaml --parameters file://CloudFormation/prod-parameters.json --change-set-name MyChangeset --change-set-type UPDATE --capabilities CAPABILITY_NAMED_IAM)    
       - CHANGESET_ID=$(echo "${CHANGESET_OUTPUT}" | jq -r '.Id')   
       - STACK_ID=$(echo "${CHANGESET_OUTPUT}" | jq -r '.StackId')    
       - LINK="https://console.aws.amazon.com/cloudformation/home?region=ap-northeast-1#/stack/detail?stackId=${STACK_ID}&amp;filter=changeSetId:${CHANGESET_ID}"      # Store the link in AWS Systems Manager Parameter Store
