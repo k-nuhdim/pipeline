@@ -7,3 +7,13 @@
 
 
 
+[
+  {
+    "ParameterKey": "ec2",
+    "ParameterValue": "t2.micro"
+  },
+  {
+    "ParameterKey": "InstanceType",
+    "ParameterValue": "ami-06ee4e2261a4dc5c3"
+  }
+]

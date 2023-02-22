@@ -3,31 +3,16 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      python: 3.8
+      python: 3.7
     commands:
       - pip install awscli
-
   build:
     commands:
-      - aws cloudformation deploy \
-          --template-body  file://CloudFormation/main.yml \
-          --stack-name Infradeployment \
-          --parameter-overrides file://CloudFormation/non-prod-parameters.json \
-          --change-set-name prod-changeset \
-          --capabilities CAPABILITY_NAMED_IAM \
-          --no-execute-changeset
-      - export CHANGE_SET_URL=$(aws cloudformation create-change-set \
-          --stack-name my-stack \
-          --change-set-name Infradeployment \
-          --template-body file://CloudFormation/main.yml \
-          --capabilities CAPABILITY_NAMED_IAM \
-          --output text \
-          --query 'Changes[].{URL:ChangeSetId}') \
-      - aws ssm put-parameter \
-          --name /iris/change-set-url \
-          --value $CHANGE_SET_URL \
-          --type String
-
+      - CHANGESET_OUTPUT=$(aws cloudformation create-change-set --stack-name MyStack --template-body file://template.yaml --change-set-name MyChangeset --change-set-type UPDATE --capabilities CAPABILITY_NAMED_IAM)    
+      - CHANGESET_ID=$(echo "${CHANGESET_OUTPUT}" | jq -r '.Id')   
+      - STACK_ID=$(echo "${CHANGESET_OUTPUT}" | jq -r '.StackId')    
+      - LINK="https://console.aws.amazon.com/cloudformation/home?region=ap-northeast-1#/stack/detail?stackId=${STACK_ID}&amp;filter=changeSetId:${CHANGESET_ID}"      # Store the link in AWS Systems Manager Parameter Store
+      - aws ssm put-parameter --name MyLinkParameter --type String --value "${LINK}"
 artifacts:
   files:
     - '**/*'
