@@ -2,13 +2,32 @@ version: 0.2
 
 phases:
   install:
+    runtime-versions:
+      python: 3.8
     commands:
-      - ls -l
+      - pip install awscli
+
   build:
     commands:
-      - ls -l 
-      - aws cloudformation deploy --template-file ./main.yml --stack-name my-new-stack
+      - aws cloudformation deploy \
+          --template-body  file://CloudFormation/main.yml \
+          --stack-name Infradeployment \
+          --parameter-overrides file://CloudFormation/non-prod-parameters.json \
+          --change-set-name prod-changeset \
+          --capabilities CAPABILITY_NAMED_IAM \
+          --no-execute-changeset
+      - export CHANGE_SET_URL=$(aws cloudformation create-change-set \
+          --stack-name my-stack \
+          --change-set-name Infradeployment \
+          --template-body file://CloudFormation/main.yml \
+          --capabilities CAPABILITY_NAMED_IAM \
+          --output text \
+          --query 'Changes[].{URL:ChangeSetId}') \
+      - aws ssm put-parameter \
+          --name /iris/change-set-url \
+          --value $CHANGE_SET_URL \
+          --type String
+
 artifacts:
   files:
     - '**/*'
-    
