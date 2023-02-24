@@ -1,0 +1,20 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.7
+    commands:
+      - pip install awscli
+  build:
+    commands:
+      - echo Deploying into Production....
+      - aws cloudformation validate-template --template-body file://CloudFormation/main.yaml
+      - aws cloudformation create-stack --stack-name IrisInfra --template-body file://CloudFormation/main.yaml --parameters file://CloudFormation/parameters.json --capabilities CAPABILITY_NAMED_IAM
+  post_build:
+    commands:
+      - echo Validating the stack details....
+      - aws cloudformation describe-stacks --stack-name IrisInfra
+artifacts:
+  files:
+    - '**/*'
