@@ -8,8 +8,8 @@ phases:
       - pip install awscli
   build:
     commands:
-      - aws cloudformation delete-change-set --stack-name MyStack --change-set-name MyChangeset
-      - CHANGESET_OUTPUT=$(aws cloudformation create-change-set --stack-name MyStack --template-body file://CloudFormation/main.yaml --parameters file://CloudFormation/prod-parameters.json --change-set-name MyChangeset --change-set-type CREATE --capabilities CAPABILITY_NAMED_IAM)    
+      - aws cloudformation delete-stack --stack-name MyStack
+      - CHANGESET_OUTPUT=$(aws cloudformation create-change-set --stack-name MyStack --template-body file://CloudFormation/main.yaml --parameters file://CloudFormation/prod-parameters.json --change-set-name MyChangeset --change-set-type UPDATE --capabilities CAPABILITY_NAMED_IAM)    
       - CHANGESET_ID=$(echo "${CHANGESET_OUTPUT}" | jq -r '.Id')   
       - STACK_ID=$(echo "${CHANGESET_OUTPUT}" | jq -r '.StackId')    
       - LINK="${STACK_ID}&amp;filter=changeSetId:${CHANGESET_ID}"   || (aws cloudformation delete-change-set --change-set-name MyChangeset --stack-name MyStack && exit 1)  #https://console.aws.amazon.com/cloudformation/home?region=ap-northeast-1#/stack/detail?stackId= # Store the link in AWS Systems Manager Parameter Store
