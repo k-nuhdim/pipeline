@@ -1,10 +1,6 @@
-[
-  {
-    "ParameterKey": "EC2InstanceType",
-    "ParameterValue": "t2.micro"
-  },
-  {
-    "ParameterKey": "EC2ImageId",
-    "ParameterValue": "ami-099effcf516c942b7"
+{ 
+  "Parameters": {
+     "EC2InstanceType": "t2.micro",
+     "EC2ImageId": "ami-099effcf516c942b7"
   }
-]
+}
