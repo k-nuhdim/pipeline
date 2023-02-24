@@ -8,22 +8,11 @@ phases:
       - pip install awscli
   build:
     commands:
-      - |
-        STACK_NAME="MyStack"
-        if aws cloudformation describe-stacks --stack-name $STACK_NAME >/dev/null 2>&1; then
-          echo "Stack $STACK_NAME exists. Deleting stack....."
-          aws cloudformation delete-stack --stack-name $STACK_NAME
-          aws cloudformation wait stack-delete-complete --stack-name $STACK_NAME
-          echo "Stack $STACK_NAME has been deleted."
-        else
-          echo "Stack $STACK_NAME does not exist. Skipping deletion."
-        fi
-      - aws cloudformation create-stack --stack-name $STACK_NAME
-      - aws cloudformation wait stack-create-complete --stack-name $STACK_NAME
-      - CHANGESET_OUTPUT=$(aws cloudformation create-change-set --stack-name MyStack --template-body file://CloudFormation/main.yaml --parameters file://CloudFormation/prod-parameters.json --change-set-name MyChangeset --change-set-type UPDATE --capabilities CAPABILITY_NAMED_IAM)    
-      - CHANGESET_ID=$(echo "${CHANGESET_OUTPUT}" | jq -r '.Id')   
-      - STACK_ID=$(echo "${CHANGESET_OUTPUT}" | jq -r '.StackId')    
-      - LINK="${STACK_ID}&amp;filter=changeSetId:${CHANGESET_ID}"   || (aws cloudformation delete-change-set --change-set-name MyChangeset --stack-name MyStack && exit 1)  #https://console.aws.amazon.com/cloudformation/home?region=ap-northeast-1#/stack/detail?stackId= # Store the link in AWS Systems Manager Parameter Store
+      - LINK=$(aws cloudformation describe-change-set --change-set-name my-change-set-name --stack-name my-stack-name | jq -r '.ChangeSetId, .StackName')
+    #  - CHANGESET_OUTPUT=$(aws cloudformation create-change-set --stack-name MyStack --template-body file://CloudFormation/main.yaml --parameters file://CloudFormation/prod-parameters.json --change-set-name MyChangeset --change-set-type UPDATE --capabilities CAPABILITY_NAMED_IAM)    
+    #  - CHANGESET_ID=$(echo "${CHANGESET_OUTPUT}" | jq -r '.Id')   
+    #  - STACK_ID=$(echo "${CHANGESET_OUTPUT}" | jq -r '.StackId')    
+    #  - LINK="${STACK_ID}&amp;filter=changeSetId:${CHANGESET_ID}"   || (aws cloudformation delete-change-set --change-set-name MyChangeset --stack-name MyStack && exit 1)  #https://console.aws.amazon.com/cloudformation/home?region=ap-northeast-1#/stack/detail?stackId= # Store the link in AWS Systems Manager Parameter Store
       - aws ssm put-parameter --name MyLinkParameter --type String --value "${LINK}"  --overwrite
 artifacts:
   files:
