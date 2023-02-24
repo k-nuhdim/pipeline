@@ -8,7 +8,16 @@ phases:
       - pip install awscli
   build:
     commands:
-      - aws cloudformation wait stack-delete-complete --stack-name MyStack
+      - |
+        STACK_NAME="MyStack"
+        if aws cloudformation describe-stacks --stack-name $STACK_NAME >/dev/null 2>&1; then
+          echo "Stack $STACK_NAME exists. Deleting stack....."
+          aws cloudformation delete-stack --stack-name $STACK_NAME
+          aws cloudformation wait stack-delete-complete --stack-name $STACK_NAME
+          echo "Stack $STACK_NAME has been deleted."
+        else
+          echo "Stack $STACK_NAME does not exist. Skipping deletion."
+        fi
       - CHANGESET_OUTPUT=$(aws cloudformation create-change-set --stack-name MyStack --template-body file://CloudFormation/main.yaml --parameters file://CloudFormation/prod-parameters.json --change-set-name MyChangeset --change-set-type UPDATE --capabilities CAPABILITY_NAMED_IAM)    
       - CHANGESET_ID=$(echo "${CHANGESET_OUTPUT}" | jq -r '.Id')   
       - STACK_ID=$(echo "${CHANGESET_OUTPUT}" | jq -r '.StackId')    
