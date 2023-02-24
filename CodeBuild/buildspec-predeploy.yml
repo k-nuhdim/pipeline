@@ -18,6 +18,8 @@ phases:
         else
           echo "Stack $STACK_NAME does not exist. Skipping deletion."
         fi
+      - aws cloudformation create-stack --stack-name $STACK_NAME
+      - aws cloudformation wait stack-create-complete --stack-name $STACK_NAME
       - CHANGESET_OUTPUT=$(aws cloudformation create-change-set --stack-name MyStack --template-body file://CloudFormation/main.yaml --parameters file://CloudFormation/prod-parameters.json --change-set-name MyChangeset --change-set-type UPDATE --capabilities CAPABILITY_NAMED_IAM)    
       - CHANGESET_ID=$(echo "${CHANGESET_OUTPUT}" | jq -r '.Id')   
       - STACK_ID=$(echo "${CHANGESET_OUTPUT}" | jq -r '.StackId')    
