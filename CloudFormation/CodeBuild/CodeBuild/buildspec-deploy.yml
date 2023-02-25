@@ -8,6 +8,7 @@ phases:
       - pip install awscli
   build:
     commands:
+      - ls -l 
       - CF_BUCKET=txxx
       - CF_STACK=InfraCoreStack
       - echo Syncing CloudFormation nested stack code to S3...
