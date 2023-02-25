@@ -12,7 +12,7 @@ phases:
       - STACKSETNAME=InfraCoreStack
       - CHANGESETID=$(aws cloudformation describe-change-set --change-set-name $CHANGESETNAME  --stack-name $STACKSETNAME | jq -r '.ChangeSetId')
       - STACKSETID=$(aws cloudformation describe-change-set --change-set-name $CHANGESETNAME  --stack-name $STACKSETNAME | jq -r '.StackId')
-      - LINK=https://console.aws.amazon.com/cloudformation/home?region=ca-central-1#/stacks/changesets/changesetdetail?changeSetId=$CHANGESETID&stackId=$STACKSETID
+      - LINK="https://console.aws.amazon.com/cloudformation/home?region=ca-central-1#/stacks/changesets/changesetdetail?changeSetId=$CHANGESETID&stackId=$STACKSETID"
       - echo Changeset Review Link - $LINK
       - aws ssm put-parameter --name MyLinkParameter --type String --value "${LINK}"  --overwrite
 artifacts:
