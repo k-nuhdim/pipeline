@@ -20,11 +20,5 @@ Resources:
     Properties:
       TemplateURL: https://s3.amazonaws.com/txxx/ec2.yml
       Parameters:
-        InstanceType: !Ref EC2InstanceType
-        ImageId: !Ref EC2ImageId
-
-
-
-
-
-    
+        EC2InstanceType: !Ref EC2InstanceType
+        EC2ImageId: !Ref EC2ImageId
