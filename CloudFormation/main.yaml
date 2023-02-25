@@ -16,7 +16,7 @@ Resources:
   EC2Stack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: s3://txxx/ec2.yml
+      TemplateURL: https://s3.amazonaws.com/txxx/ec2.yml
       Parameters:
         InstanceType: !Ref EC2InstanceType
         ImageId: !Ref EC2ImageId
