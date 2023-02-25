@@ -13,12 +13,13 @@ Parameters:
 
 AWSTemplateFormatVersion: '2010-09-09'
 Resources:
-  EC2Instance:
-    Type: 'AWS::EC2::Instance'
+  EC2Stack:
+    Type: AWS::CloudFormation::Stack
     Properties:
-      InstanceType: !Ref EC2InstanceType
-      ImageId: !Ref EC2ImageId
-
+      TemplateURL: file://NestedStacks/ec2.yml
+      Parameters:
+        InstanceType: !Ref EC2InstanceType
+        ImageId: !Ref EC2ImageId
 
 
 
