@@ -8,11 +8,9 @@ Parameters:
       - t2.micro
       - t2.small
       - t2.medium
-    Default: t2.micro
   EC2ImageId:
     Type: String
     Description: EC2 image ID
-    Default: ami-099effcf516c942b7
 
 Resources:
   EC2Stack:
