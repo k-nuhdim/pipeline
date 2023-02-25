@@ -1,4 +1,5 @@
 ---
+AWSTemplateFormatVersion: '2010-09-09'
 Parameters:
   EC2InstanceType:
     Type: String
@@ -11,7 +12,6 @@ Parameters:
     Type: String
     Description: EC2 image ID
 
-AWSTemplateFormatVersion: '2010-09-09'
 Resources:
   EC2Stack:
     Type: AWS::CloudFormation::Stack
