@@ -16,7 +16,7 @@ Resources:
   EC2Stack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: ./NestedStacks/ec2.yml
+      TemplateURL: s3://testbucket-x/ec2.yml
       Parameters:
         InstanceType: !Ref EC2InstanceType
         ImageId: !Ref EC2ImageId
