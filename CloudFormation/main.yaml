@@ -19,7 +19,8 @@ Resources:
   VpcStack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://s3.amazonaws.com/iris-infrapipeline-templatesxj/InfraCoreStack/VpcStack.yml
+      TemplateURL: !Join ["", ["https://s3.amazonaws.com/", "/", !Ref CFBucket, "/", !Ref CoreStackName, "/", !Ref 'AWS::StackName', ".yml"]]
+#      TemplateURL: https://s3.amazonaws.com/iris-infrapipeline-templatesxj/InfraCoreStack/VpcStack.yml
       Parameters:
         VpcCidrBlock: !Ref VpcCidrBlock
         Environment: !Ref Environment
