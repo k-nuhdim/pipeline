@@ -4,6 +4,9 @@ Parameters:
   VpcCidrBlock:
     Type: String
     Description: VPC CIDR Block 
+  Environment:
+    Type: String
+    Description: VPC Environment
 
 Resources:
   MyVPC:
