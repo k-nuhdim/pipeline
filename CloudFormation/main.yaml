@@ -19,7 +19,7 @@ Resources:
   VpcStack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL:  !Sub "https://s3.amazonaws.com/iris-infrapipeline-templatesxj/InfraCoreStack/${AWS::StackName}.yml"
+      TemplateURL:  !Sub "https://s3.amazonaws.com/iris-infrapipeline-templatesxj/InfraCoreStack/VpcStack.yml"
 
     #    'Fn::Join': ["", ["https://s3.amazonaws.com/", !Ref CFBucket, "/", !Ref CoreStackName, "/", !Ref "AWS::StackName", ".yml"]]
     #    'Fn::Join': [ "", ["CloudFormationRole", "-", !Ref 'AWS::StackName']]
