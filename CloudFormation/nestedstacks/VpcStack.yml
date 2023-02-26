@@ -13,5 +13,7 @@ Resources:
   MyVPC:
     Type: "AWS::EC2::VPC"
     Properties:
-      VpcName: !Sub '${Environment}-vpc'
       CidrBlock: !Ref VpcCidrBlock
+      Tags:
+        - Key: Name
+          Value: !Sub '${Environment}-vpc'
