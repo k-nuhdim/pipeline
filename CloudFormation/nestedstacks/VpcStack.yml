@@ -1,0 +1,13 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+Parameters:
+  VpcCidrBlock:
+    Type: String
+    Description: VPC CIDR Block 
+
+Resources:
+  MyVPC:
+    Type: "AWS::EC2::VPC"
+    Properties:
+      VpcName: !Sub '${Environment}-vpc'
+      CidrBlock: !Ref VpcCidrBlock

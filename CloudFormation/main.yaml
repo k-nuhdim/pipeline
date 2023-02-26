@@ -1,22 +1,27 @@
 ---
 AWSTemplateFormatVersion: '2010-09-09'
 Parameters:
-  EC2InstanceType:
+  Environment:
     Type: String
-    Description: EC2 instance type
+    Description: Deployment Environment
     AllowedValues:
-      - t2.micro
-      - t2.small
-      - t2.medium
-  EC2ImageId:
+      - "prod"
+      - "nonprod"
+  CoreStackName:
     Type: String
-    Description: EC2 image ID
+    Default: !Sub "${AWS::StackName}"
+  CFBucket:
+    Type: String
+    Description: The name of the S3 bucket where the CloudFormation template is located.
+  VpcCidrBlock:
+    Type: String
+    Description: VPC CIDR Block 
 
 Resources:
-  EC2Stack:
+  VpcStack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: https://s3.amazonaws.com/txxx/ec2.yml
+      TemplateURL: https://s3.amazonaws.com/{CFBucket}/{CoreStackName}/{AWS::StackName}.yml
       Parameters:
-        EC2InstanceType: !Ref EC2InstanceType
-        EC2ImageId: !Ref EC2ImageId
+        VpcCidrBlock: !Ref VpcCidrBlock
+        Environment: !Sub Environment

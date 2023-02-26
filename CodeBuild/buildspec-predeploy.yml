@@ -8,11 +8,12 @@ phases:
       - pip install awscli
   build:
     commands:
-      - ls -l 
-      - CF_BUCKET=txxx
-      - CF_STACK=InfraCoreStack
-      - echo Syncing CloudFormation nested stack code to S3...
-      - aws s3 sync CloudFormation/NestedStacks s3://$CF_BUCKET/$CF_STACK --delete
+      # TODO - Parameter@Single source of truth! Use SSM:Paramter to stote common templates.
+      - cf_bucket=iris-infrapipeline-templatesxj
+      - templatepath="CloudFormation/nestedstacks"
+      - cf_stack=InfraCoreStack
+      - echo Syncing CloudFormation Nested stack code to S3 bucket...
+      - aws s3 sync $templatepath s3://$cf_bucket/$cf_stack --delete
 artifacts:
   files:
     - '**/*'
