@@ -15,7 +15,6 @@ Parameters:
   VpcCidrBlock:
     Type: String
     Description: VPC CIDR Block 
-
 Resources:
   VpcStack:
     Type: AWS::CloudFormation::Stack

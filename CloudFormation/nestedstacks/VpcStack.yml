@@ -8,7 +8,6 @@ Parameters:
     Type: String
     Description: VPC Environment
 
-
 Resources:
   MyVPC:
     Type: "AWS::EC2::VPC"
