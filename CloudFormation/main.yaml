@@ -23,4 +23,4 @@ Resources:
       TemplateURL: https://s3.amazonaws.com/iris-infrapipeline-templatesxj/InfraCoreStack/VpcStack.yml
       Parameters:
         VpcCidrBlock: !Ref VpcCidrBlock
-        Environment: !Sub Environment
+        Environment: !Ref Environment
