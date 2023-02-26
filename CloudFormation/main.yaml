@@ -9,7 +9,6 @@ Parameters:
       - "nonprod"
   CoreStackName:
     Type: String
-    Default: !Ref AWS::StackName
   CFBucket:
     Type: String
     Description: The name of the S3 bucket where the CloudFormation template is located.
