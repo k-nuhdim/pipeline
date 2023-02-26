@@ -1,9 +1,9 @@
 { 
   "Parameters": {
+     "CoreStackName": "InfraCoreStack",
      "Environment": "nonprod",
      "CFBucket": "iris-infrapipeline-templatesxj",
-     "VpcCidrBlock": "10.0.0.0/16",
-     "CoreStackName" : {"Fn::Sub": "${AWS::StackName}"}
+     "VpcCidrBlock": "10.0.0.0/16"
     }
 }
 

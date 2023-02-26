@@ -1,5 +1,6 @@
 { 
   "Parameters": {
+     "CoreStackName": "InfraCoreStack",
      "Environment": "prod",
      "CFBucket": "iris-infrapipeline-templatesxj",
      "VpcCidrBlock": "10.0.0.0/16"
