@@ -7,12 +7,99 @@ Parameters:
   Environment:
     Type: String
     Description: VPC Environment
+  PrivateLCidr:
+    Type: String
+    Default: "10.0.1.0/24"
+    Description: "The CIDR block for the PrivateL subnet"
+  PrivateRCidr:
+    Type: String
+    Default: "10.0.2.0/24"
+    Description: "The CIDR block for the PrivateR subnet"
+  PrivateXCidr:
+    Type: String
+    Default: "10.0.3.0/24"
+    Description: "The CIDR block for the PrivateX subnet"
+  PrivateYCidr:
+    Type: String
+    Default: "10.0.4.0/24"
+    Description: "The CIDR block for the PrivateY subnet"
+  PublicLCidr:
+    Type: String
+    Default: "10.0.5.0/24"
+    Description: "The CIDR block for the PublicL subnet"
+  PublicRCidr:
+    Type: String
+    Default: "10.0.6.0/24"
+    Description: "The CIDR block for the PublicR subnet"
+
 
 Resources:
-  MyVPC:
+  CoreVPC:
     Type: "AWS::EC2::VPC"
     Properties:
       CidrBlock: !Ref VpcCidrBlock
       Tags:
         - Key: Name
-          Value: !Sub '${Environment}-vpc'
+          Value: !Sub 'vpc-${Environment}'
+
+ # Create the private subnets
+  PrivateL:
+    Type: "AWS::EC2::Subnet"
+    Properties:
+      VpcId: !Ref CoreVPC
+      CidrBlock: !Ref PrivateLCidr
+      AvailabilityZone: !Select [0, !GetAZs !Ref "AWS::Region"]
+      Tags:
+        - Key: "Name"
+          Value: "PrivateL"
+
+  PrivateR:
+    Type: "AWS::EC2::Subnet"
+    Properties:
+      VpcId: !Ref CoreVPC
+      CidrBlock: !Ref PrivateRCidr
+      AvailabilityZone: !Select [1, !GetAZs !Ref "AWS::Region"]
+      Tags:
+        - Key: "Name"
+          Value: "PrivateR"
+
+  PrivateX:
+    Type: "AWS::EC2::Subnet"
+    Properties:
+      VpcId: !Ref CoreVPC
+      CidrBlock: !Ref PrivateXCidr
+      AvailabilityZone: !Select [0, !GetAZs !Ref "AWS::Region"]
+      Tags:
+        - Key: "Name"
+          Value: "PrivateX"
+
+  PrivateY:
+    Type: "AWS::EC2::Subnet"
+    Properties:
+      VpcId: !Ref CoreVPC
+      CidrBlock: !Ref PrivateYCidr
+      AvailabilityZone: !Select [1, !GetAZs !Ref "AWS::Region"]
+      Tags:
+        - Key: "Name"
+          Value: "PrivateY"
+
+ # Create the private subnets
+  PublicL:
+    Type: "AWS::EC2::Subnet"
+    Properties:
+      VpcId: !Ref CoreVPC
+      CidrBlock: !Ref PublicLCidr
+      AvailabilityZone: !Select [0, !GetAZs !Ref "AWS::Region"]
+      Tags:
+        - Key: "Name"
+          Value: "PublicL"
+
+  PrivateR:
+    Type: "AWS::EC2::Subnet"
+    Properties:
+      VpcId: !Ref CoreVPC
+      CidrBlock: !Ref PublicRCidr
+      AvailabilityZone: !Select [1, !GetAZs !Ref "AWS::Region"]
+      Tags:
+        - Key: "Name"
+          Value: "PublicR"

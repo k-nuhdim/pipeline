@@ -15,6 +15,33 @@ Parameters:
   VpcCidrBlock:
     Type: String
     Description: VPC CIDR Block 
+  PrivateLCidr:
+    Type: String
+    Default: "10.0.1.0/24"
+    Description: "The CIDR block for the PrivateL subnet"
+  PrivateRCidr:
+    Type: String
+    Default: "10.0.2.0/24"
+    Description: "The CIDR block for the PrivateR subnet"
+  PrivateXCidr:
+    Type: String
+    Default: "10.0.3.0/24"
+    Description: "The CIDR block for the PrivateX subnet"
+  PrivateYCidr:
+    Type: String
+    Default: "10.0.4.0/24"
+    Description: "The CIDR block for the PrivateY subnet"
+  PublicLCidr:
+    Type: String
+    Default: "10.0.5.0/24"
+    Description: "The CIDR block for the PublicL subnet"
+  PublicRCidr:
+    Type: String
+    Default: "10.0.6.0/24"
+    Description: "The CIDR block for the PublicR subnet"
+
+
+
 Resources:
   VpcStack:
     Type: AWS::CloudFormation::Stack
@@ -23,4 +50,10 @@ Resources:
       TemplateURL:  !Sub "https://s3.amazonaws.com/${CFBucket}/${CoreStackName}/VpcStack.yml"
       Parameters:
         VpcCidrBlock: !Ref VpcCidrBlock
-        Environment: !Ref Environment
+        Environment:  !Ref Environment
+        PrivateLCidr: !Ref PrivateLCidr
+        PrivateRCidr: !Ref PrivateRCidr 
+        PrivateXCidr: !Ref PrivateXCidr
+        PrivateYCidr: !Ref PrivateYCidr
+        PublicLCidr:  !Ref PublicLCidr
+        PublicRCidr:  !Ref PublicRCidr
