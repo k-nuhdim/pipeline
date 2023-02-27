@@ -48,17 +48,14 @@ Resources:
     Properties:
       VpcId: !Ref CoreVPC
       CidrBlock: !Ref PrivateLCidr
-      AvailabilityZone: !Select [0, !GetAZs !Ref "AWS::Region"]
-      Tags:
-        - Key: "Name"
-          Value: "PrivateL"
+      AvailabilityZone:  !Select [ 0 , !GetAZs  '' ]
 
   PrivateR:
     Type: "AWS::EC2::Subnet"
     Properties:
       VpcId: !Ref CoreVPC
       CidrBlock: !Ref PrivateRCidr
-      AvailabilityZone: !Select [1, !GetAZs !Ref "AWS::Region"]
+      AvailabilityZone: !Select [ 1, !GetAZs  '' ]
       Tags:
         - Key: "Name"
           Value: "PrivateR"
@@ -68,7 +65,7 @@ Resources:
     Properties:
       VpcId: !Ref CoreVPC
       CidrBlock: !Ref PrivateXCidr
-      AvailabilityZone: !Select [0, !GetAZs !Ref "AWS::Region"]
+      AvailabilityZone: !Select [ 0, !GetAZs  '' ]
       Tags:
         - Key: "Name"
           Value: "PrivateX"
@@ -78,28 +75,28 @@ Resources:
     Properties:
       VpcId: !Ref CoreVPC
       CidrBlock: !Ref PrivateYCidr
-      AvailabilityZone: !Select [1, !GetAZs !Ref "AWS::Region"]
+      AvailabilityZone: !Select [ 1, !GetAZs  '' ]
       Tags:
         - Key: "Name"
           Value: "PrivateY"
 
- # Create the private subnets
+ # Create the public subnets
   PublicL:
     Type: "AWS::EC2::Subnet"
     Properties:
       VpcId: !Ref CoreVPC
       CidrBlock: !Ref PublicLCidr
-      AvailabilityZone: !Select [0, !GetAZs !Ref "AWS::Region"]
+      AvailabilityZone: !Select [ 0, !GetAZs '']
       Tags:
         - Key: "Name"
           Value: "PublicL"
 
-  PrivateR:
+  PublicR:
     Type: "AWS::EC2::Subnet"
     Properties:
       VpcId: !Ref CoreVPC
       CidrBlock: !Ref PublicRCidr
-      AvailabilityZone: !Select [1, !GetAZs !Ref "AWS::Region"]
+      AvailabilityZone: !Select [ 1, !GetAZs '']
       Tags:
         - Key: "Name"
           Value: "PublicR"
